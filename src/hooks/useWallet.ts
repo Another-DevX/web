@@ -1,7 +1,7 @@
-import { useAccount, useDisconnect } from 'wagmi';
+import { useDisconnect } from 'wagmi';
 import { deleteCookie, setCookie, getCookie } from 'cookies-next';
 import { celo, celoAlfajores } from '@wagmi/chains';
-import { useWeb3Modal } from '@web3modal/wagmi/react';
+// import { useWeb3Modal } from '@web3modal/wagmi/react';
 import { useEffect } from 'react';
 import { getAddress } from '@ethersproject/address';
 import Api from '../apis/api';
@@ -41,7 +41,7 @@ export const wagmiConfig = createConfig({
 });
 
 export const useWallet = () => {
-    const { open } = useWeb3Modal();
+    // const { open } = useWeb3Modal();
     const { connect, address } = useCelo();
     const { disconnect: disconnect_ } = useDisconnect();
     // const { address, isConnected } = useAccount();
@@ -66,10 +66,10 @@ export const useWallet = () => {
             }
         };
 
-        if ( address) {
+        if (address) {
             connectUser();
         }
-    }, [ address]);
+    }, [address]);
 
     const disconnect = async () => {
         try {
