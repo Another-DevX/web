@@ -1,5 +1,7 @@
 import { AppProps } from 'next/app';
 import { Content, GlobalStyle, Main } from '../theme/components';
+import { CeloProvider } from '@celo/react-celo';
+import '@celo/react-celo/lib/styles.css';
 import {
     CookieConsent,
     Footer,
@@ -96,52 +98,64 @@ export default function App(props: AppProps) {
 
     return (
         <DataProvider page={page} url={url}>
-            <PrismicDataProvider data={data} page={page} url={url}>
-                <TranslationProvider locale={locale}>
-                    <Head>
-                        <meta
-                            content="width=device-width, initial-scale=1"
-                            name="viewport"
-                        />
-                        <meta content="#2362FB" name="theme-color" />
-                        <link rel="manifest" href="/manifest.json" />
-                        <link
-                            rel="apple-touch-icon"
-                            href="/img/icons/icon-96x96.png"
-                        />
-                        <meta
-                            name="apple-mobile-web-app-status-bar"
-                            content="#90cdf4"
-                        />
-                        <script type="text/javascript">
-                            {`(function(c,l,a,r,i,t,y){
+            <CeloProvider
+                dapp={{
+                    icon: '',
+                    name: 'My awesome dApp',
+                    description: 'My awesome description',
+                    url: 'https://example.com',
+            
+                }}
+            >
+                <PrismicDataProvider data={data} page={page} url={url}>
+                    <TranslationProvider locale={locale}>
+                        <Head>
+                            <meta
+                                content="width=device-width, initial-scale=1"
+                                name="viewport"
+                            />
+                            <meta content="#2362FB" name="theme-color" />
+                            <link rel="manifest" href="/manifest.json" />
+                            <link
+                                rel="apple-touch-icon"
+                                href="/img/icons/icon-96x96.png"
+                            />
+                            <meta
+                                name="apple-mobile-web-app-status-bar"
+                                content="#90cdf4"
+                            />
+                            <script type="text/javascript">
+                                {`(function(c,l,a,r,i,t,y){
                             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                         })(window, document, "clarity", "script", "hiriq2fzcz");`}
-                        </script>
-                    </Head>
-                    <SEO meta={meta} />
-                    <ThemeProvider theme={theme}>
-                        <GlobalStyle />
-                        <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
-                            <Loading isActive={showSpinner} />
-                            <Toaster />
-                            <Main>
-                                <ImpactMarketDaoProvider>
-                                    <ModalManager modals={modals} />
-                                    <Header />
-                                    <Content>
-                                        <Component {...pageProps} />
-                                    </Content>
-                                    <Footer {...footerOptions} />
-                                </ImpactMarketDaoProvider>
-                            </Main>
-                            <CookieConsent />
-                        </GoogleReCaptchaProvider>
-                    </ThemeProvider>
-                </TranslationProvider>
-            </PrismicDataProvider>
+                            </script>
+                        </Head>
+                        <SEO meta={meta} />
+                        <ThemeProvider theme={theme}>
+                            <GlobalStyle />
+                            <GoogleReCaptchaProvider
+                                reCaptchaKey={recaptchaKey}
+                            >
+                                <Loading isActive={showSpinner} />
+                                <Toaster />
+                                <Main>
+                                    <ImpactMarketDaoProvider>
+                                        <ModalManager modals={modals} />
+                                        <Header />
+                                        <Content>
+                                            <Component {...pageProps} />
+                                        </Content>
+                                        <Footer {...footerOptions} />
+                                    </ImpactMarketDaoProvider>
+                                </Main>
+                                <CookieConsent />
+                            </GoogleReCaptchaProvider>
+                        </ThemeProvider>
+                    </TranslationProvider>
+                </PrismicDataProvider>
+            </CeloProvider>
         </DataProvider>
     );
 }
