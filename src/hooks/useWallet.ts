@@ -11,6 +11,8 @@ import { publicProvider } from 'wagmi/providers/public';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { walletConnectProvider } from '@web3modal/wagmi';
+import { useCelo } from '@celo/react-celo';
+// import { useCelo } from '@celo/react-celo';
 
 export const projectId = config.walletConnectProjectId;
 
@@ -40,8 +42,9 @@ export const wagmiConfig = createConfig({
 
 export const useWallet = () => {
     const { open } = useWeb3Modal();
+    const { connect, address } = useCelo();
     const { disconnect: disconnect_ } = useDisconnect();
-    const { address, isConnected } = useAccount();
+    // const { address, isConnected } = useAccount();
 
     useEffect(() => {
         const connectUser = async () => {
@@ -63,10 +66,10 @@ export const useWallet = () => {
             }
         };
 
-        if (isConnected && address) {
+        if ( address) {
             connectUser();
         }
-    }, [isConnected, address]);
+    }, [ address]);
 
     const disconnect = async () => {
         try {
@@ -84,5 +87,5 @@ export const useWallet = () => {
         }
     };
 
-    return { address, connect: open, disconnect, wrongNetwork: false };
+    return { address, connect, disconnect, wrongNetwork: false };
 };
